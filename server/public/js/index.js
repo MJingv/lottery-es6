@@ -8882,9 +8882,9 @@
 	      var self = this;
 	      (0, _jquery2.default)('#plays').on('click', 'li', self.changePlayNav.bind(self));
 	      (0, _jquery2.default)('.boll-list').on('click', '.btn-boll', self.toggleCodeActive.bind(self));
-	      (0, _jquery2.default)('#confirm_set_code').on('click', self.addCode.bind(self));
+	      (0, _jquery2.default)('#confirm_sel_code').on('click', self.addCode.bind(self));
 	      (0, _jquery2.default)('.dxjo').on('click', 'li', self.assistHandle.bind(self));
-	      (0, _jquery2.default)('qkmethod').on('click', '.btn-middle', self.getRandomCode.bind(self));
+	      (0, _jquery2.default)('.qkmethod').on('click', '.btn-middle', self.getRandomCode.bind(self));
 	    }
 	  }]);
 
@@ -9055,7 +9055,7 @@
 			value: function changePlayNav(e) {
 				var self = this;
 				var $cur = (0, _jquery2.default)(e.currentTarget);
-				$cur.addClass('active').siblings().remove('active');
+				$cur.addClass('active').siblings().removeClass('active');
 				self.cur_play = $cur.attr('desc').toLocalLowCase();
 				(0, _jquery2.default)('#zx_sm span').html(self.play_list.get(self.cur_play).tip);
 				(0, _jquery2.default)('.boll-list .btn-boll').removeClass('btn-boll-active');

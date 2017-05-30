@@ -80,7 +80,7 @@ class Base{
 		changePlayNav(e){
 			let self=this;
 			let $cur=$(e.currentTarget);
-			$cur.addClass('active').siblings().remove('active');
+			$cur.addClass('active').siblings().removeClass('active');
 			self.cur_play=$cur.attr('desc').toLocalLowCase();
 			$('#zx_sm span').html(self.play_list.get(self.cur_play).tip);
 			$('.boll-list .btn-boll').removeClass('btn-boll-active');
