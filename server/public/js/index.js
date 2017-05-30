@@ -8925,6 +8925,7 @@
 
 			// 初始化奖金及说明
 			value: function initPlayList() {
+				//
 				this.play_list.set('r2', {
 					bonus: 6,
 					tip: '从01～11中任选2个或多个号码，所选号码与开奖号码相同，即中奖<em class="red">6</em>元',
@@ -8971,7 +8972,7 @@
 			key: 'setOmit',
 			value: function setOmit(omit) {
 				var self = this;
-				self.omit.clear();
+				self.omit.clear(); //清除以前遗漏数据
 				var _iteratorNormalCompletion = true;
 				var _didIteratorError = false;
 				var _iteratorError = undefined;
@@ -9009,7 +9010,7 @@
 			key: 'setOpenCode',
 			value: function setOpenCode(code) {
 				var self = this;
-				self.open_code.clear(); //清除当前选号
+				self.open_code.clear(); //清除以前获奖选号
 				var _iteratorNormalCompletion2 = true;
 				var _didIteratorError2 = false;
 				var _iteratorError2 = undefined;
@@ -19076,13 +19077,16 @@
 			key: 'computeCount',
 
 			//计算注数
-			//play_name 当前玩法标识
-			//active 当前选中的号码
+			//play_name 当前玩法标识名称（eg:r3...）
+			//active 当前选中的号码的个数
 			value: function computeCount(active, play_name) {
 				var count = 0;
+				//判断是否为合法玩法(r2~r8)
 				var exist = this.play_list.has(play_name);
+				//生成长度为active选中的个数，填充值为0的数组
 				var arr = new Array(active).fill('0');
 				if (exist && play_name.at(0) === 'r') {
+					//选择正确
 					count = Calculate.combine(arr, play_name.split('')[1]).length;
 				}
 				return count;
@@ -19137,14 +19141,18 @@
 					return item * self.play_list.get(play_name).bonus;
 				});
 			}
+
 			//组合运算
 			//arr 参与组合运算的数组
-			//size 组合运算的基数
+			//size 组合运算的基数 (eg:r2,r3中的2,3)
 
 		}], [{
 			key: 'combine',
 			value: function combine(arr, size) {
+				//静态方法
+				//保存结果
 				var allResult = [];
+
 				(function f(arr, size, result) {
 					var arrLen = arr.length;
 					if (size > arrLen) {
@@ -19195,6 +19203,7 @@
 
 	function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
 
+	//3个通信接口：获取遗漏数据，获取开奖号码，获取当前状态
 	var Interface = function () {
 		function Interface() {
 			_classCallCheck(this, Interface);
@@ -19207,19 +19216,22 @@
 
 			//获取遗漏数据接口
 			value: function getOmit(issue) {
+				//获取当前对象
 				var self = this;
 				return new Promise(function (resolve, reject) {
 					_jquery2.default.ajax({
-						url: '/get/omit',
-						data: {
+						url: '/get/omit', //接口地址
+						data: { //参数
 							issue: issue
 						},
-						dataType: 'json',
+						dataType: 'json', //数据类型
 						success: function success(res) {
-							self.setOmit(res.data);
+							//通信成功
+							self.setOmit(res.data); //保存后台数据
 							resolve.call(self, res);
 						},
 						error: function error(err) {
+							//通信失败
 							reject.call(err);
 						}
 					});
@@ -19230,6 +19242,7 @@
 		}, {
 			key: 'getOpenCode',
 			value: function getOpenCode(issue) {
+				//获取当前对象
 				var self = this;
 				return new Promise(function (resolve, reject) {
 					_jquery2.default.ajax({
@@ -19298,8 +19311,14 @@
 
 		_createClass(Timer, [{
 			key: 'countdown',
+
+			//end 截止时间
+			//update 更新时间回调
+			//倒计时结束后的回调
 			value: function countdown(end, update, handle) {
+				//now 当前时间
 				var now = new Date().getTime();
+				//获取当前啊对象
 				var self = this;
 				if (now - end > 0) {
 					//如果倒计时结束
@@ -19307,7 +19326,7 @@
 				} else {
 					//如果没有倒计时结束
 					var last_time = end - now; //剩余时间
-					//变换常量d,h,m,s
+					//变换常量d,h,m,s （单位ms）
 					var px_d = 1000 * 60 * 60 * 24;
 					var px_h = 1000 * 60 * 24;
 					var px_m = 1000 * 60;
@@ -19317,23 +19336,29 @@
 					var h = Math.floor((last_time - d * px_d) / px_h);
 					var m = Math.floor((last_time - d * px_d - h * px_h) / px_m);
 					var s = Math.floor((last_time - d * px_d - h * px_h - m * px_m) / px_s);
+
 					//保存结果到数组中
 					var r = [];
 					if (d > 0) {
+						//保存天数
 						r.push('<em>' + d + '</em>\u5929');
 					}
 					if (r.length || h > 0) {
+						//保存小时数
 						r.push('<em>' + h + '</em>\u65F6');
 					}
 					if (r.length || m > 0) {
+						//保存分钟数
 						r.push('<em>' + m + '</em>\u5206');
 					}
 					if (r.length || s > 0) {
+						//保存秒数
 						r.push('<em>' + s + '</em>\u79D2');
 					}
 
 					self.last_time = r.join('');
 					update.call(self, r.join(''));
+					//1秒更新一次
 					setTimeout(function () {
 						self.countdown(end, update, handle);
 					}, 1000);

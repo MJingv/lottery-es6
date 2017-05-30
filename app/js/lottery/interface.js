@@ -1,23 +1,25 @@
 import $ from 'jquery';
 
+//3个通信接口：获取遗漏数据，获取开奖号码，获取当前状态
 class Interface{
 	//期号issue
 
 	//获取遗漏数据接口
 	getOmit(issue){
+		//获取当前对象
 		let self=this;
 		return new Promise((resolve, reject) => {
 			$.ajax({
-				url:'/get/omit',
-				data:{
+				url:'/get/omit',//接口地址
+				data:{//参数
 					issue:issue
 				},
-				dataType:'json',
-				success:function(res){
-					self.setOmit(res.data);
+				dataType:'json',//数据类型
+				success:function(res){//通信成功
+					self.setOmit(res.data);//保存后台数据
 					resolve.call(self,res)
 				},
-				error:function(err){
+				error:function(err){//通信失败
 					reject.call(err);
 
 				}
@@ -26,6 +28,7 @@ class Interface{
 	}
 	//获取开奖号码接口
 	getOpenCode(issue){
+		//获取当前对象
 		let self=this;
 		return new Promise((resolve, reject) => {
 			$.ajax({

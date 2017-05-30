@@ -3,6 +3,7 @@ import $ from 'jquery';
 class Base{
 		// 初始化奖金及说明
 		initPlayList(){
+		//
 		this.play_list.
 		set('r2',{
 			bonus:6,
@@ -51,7 +52,7 @@ class Base{
 		//设置遗漏数据
 		setOmit(omit){
 			let self=this;
-			self.omit.clear();
+			self.omit.clear();//清除以前遗漏数据
 			for(let [index,item] of omit.entries()){
 				self.omit.set(index,item);
 			}
@@ -62,7 +63,7 @@ class Base{
 		//设置开奖
 		setOpenCode(code){
 			let self=this;
-			self.open_code.clear();//清除当前选号
+			self.open_code.clear();//清除以前获奖选号
 			for(let item of code.values()){
 				self.open_code.add(item);
 			}

@@ -1,13 +1,15 @@
 
 class Calculate{
 	//计算注数
-	//play_name 当前玩法标识
-	//active 当前选中的号码
+	//play_name 当前玩法标识名称（eg:r3...）
+	//active 当前选中的号码的个数
 	computeCount(active,play_name){
 		let count=0;
+		//判断是否为合法玩法(r2~r8)
 		const exist=this.play_list.has(play_name);
+		//生成长度为active选中的个数，填充值为0的数组
 		const arr=new Array(active).fill('0');
-		if (exist && play_name.at(0)==='r') {
+		if (exist && play_name.at(0)==='r') {//选择正确
 			count=Calculate.combine(arr,play_name.split('')[1]).length;
 
 		}
@@ -62,11 +64,14 @@ class Calculate{
 			item*self.play_list.get(play_name).bonus)
 
 	}
+
 	//组合运算
 	//arr 参与组合运算的数组
-	//size 组合运算的基数
-	static combine(arr,size){
+	//size 组合运算的基数 (eg:r2,r3中的2,3)
+	static combine(arr,size){//静态方法
+		//保存结果
 		let allResult=[];
+		
 		(function f(arr,size,result){
 			let arrLen=arr.length;
 			if (size>arrLen) {
