@@ -19328,7 +19328,7 @@
 					var last_time = end - now; //剩余时间
 					//变换常量d,h,m,s （单位ms）
 					var px_d = 1000 * 60 * 60 * 24;
-					var px_h = 1000 * 60 * 24;
+					var px_h = 1000 * 60 * 60;
 					var px_m = 1000 * 60;
 					var px_s = 1000;
 					//动态计算剩余时间d,h,m,s
