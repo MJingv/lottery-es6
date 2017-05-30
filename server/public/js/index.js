@@ -9124,10 +9124,11 @@
 			key: 'addCode',
 			value: function addCode() {
 				var self = this;
-				var $active = (0, _jquery2.default)('.boll-list .btn-boll-active ').text().match(/\d{2}/g);
+				var $active = (0, _jquery2.default)('.boll-list .btn-boll-active ').text().match(/\d{2}/g); //2个数字一组
 				var active = $active ? $active.length : 0;
 				var count = self.computeCount(active, self.cur_play);
 				if (count) {
+					//添加条目
 					self.addCodeItem($active.join(' '), self.cur_play, self.play_list.get(self.cur_play).name, count);
 				}
 			}
@@ -9138,7 +9139,7 @@
 			key: 'addCodeItem',
 			value: function addCodeItem(code, type, typeName, count) {
 				var self = this;
-				var tpl = '\n\t\t\t<li codes="' + type + '|' + code + '" bonus="' + count * 2 + '" count="' + count + '">\n\t\t\t <div class=\'code\'>\n\t\t\t  <b>' + type + (count > 1 ? '复式' : '单式') + '</b>\n\t\t\t  <b class=\'em\'>' + code + '</b>\n\t\t\t  [' + count + '\u6CE8,<em class="code-list-money">' + count * 2 + '</em>\u5143]\n\t\t\t </div>\n\t\t\t</li>\n\t\t\t';
+				var tpl = '\n\t\t\t<li codes="' + type + '|' + code + '" bonus="' + count * 2 + '" count="' + count + '">\n\t\t\t <div class=\'code\'>\n\t\t\t  <b>' + typeName + (count > 1 ? '复式' : '单式') + '</b>\n\t\t\t  <b class=\'em\'>' + code + '</b>\n\t\t\t  [' + count + '\u6CE8,<em class="code-list-money">' + count * 2 + '</em>\u5143]\n\t\t\t </div>\n\t\t\t</li>\n\t\t\t';
 				(0, _jquery2.default)(self.cart_el).append(tpl);
 				self.getTotal();
 			}
@@ -9160,7 +9161,7 @@
 				} else if (range[0] === range[1]) {
 					tpl = '\u60A8\u9009\u4E86<b>' + count + '</b>\u6CE8\uFF0C\n\t\t\t\t\u5171<b >' + count * 2 + '</b>\u5143 <em>\u82E5\u4E2D\u5956\uFF0C\n\t\t\t\t\u5956\u91D1\uFF1A<strong class="red"> ' + range[0] + ' </strong>\u5143\uFF0C\u60A8\u5C06\n\t\t\t\t' + (win1 >= 0 ? '盈利' : '亏损') + '\n\t\t\t\t<strong class="' + (win1 >= 0 ? 'red' : 'green') + '">' + Math.abs(win1) + '</strong>\u5143\n\n\t\t\t\t</em>';
 				} else {
-					tpl = '\u60A8\u9009\u4E86<b>' + count + '</b>\u6CE8\uFF0C\n\t\t\t\t\u5171<b >' + count * 2 + '</b>\u5143 <em>\u82E5\u4E2D\u5956\uFF0C\n\t\t\t\t\u5956\u91D1\uFF1A<strong class="red"> ' + range[0] + ' </strong>\u5143\n\t\t\t\t\u81F3<strong class="red"> ' + range[1] + ' </strong>\n\t\t\t\t \u60A8\u5C06\n\t\t\t\t' + (win1 < 0 && win2 < 0 ? '亏损' : '盈利') + '\n\t\t\t\t<strong class="' + (win1 >= 0 ? 'red' : 'green') + '">' + Math.abs(c1) + '</strong>\u81F3\n\t\t\t\t<strong class="' + (win1 >= 0 ? 'red' : 'green') + '">' + Math.abs(c2) + '</strong>\u5143\n\t\t\t\t</em>';
+					tpl = '\u60A8\u9009\u4E86<b>' + count + '</b>\u6CE8\uFF0C\u5171<b>' + count * 2 + '</b>\u5143 <em>\u82E5\u4E2D\u5956\uFF0C\u5956\u91D1\uFF1A\n\t\t\t\t<strong class="red"> ' + range[0] + ' </strong> \u81F3 <strong class="red"> ' + range[1] + ' </strong> \u5143,\n\t\t\t\t \u60A8\u5C06 ' + (win1 < 0 && win2 < 0 ? '亏损' : '盈利') + '\n\t\t\t\t<strong class="' + (win1 >= 0 ? 'red' : 'green') + '">' + c1 + '</strong>\u81F3\n\t\t\t\t<strong class="' + (win2 >= 0 ? 'red' : 'green') + '">' + c1 + '</strong>\u5143\n\t\t\t\t</em>';
 				}
 				(0, _jquery2.default)('.sel_info').html(tpl);
 			}
@@ -19149,18 +19150,18 @@
 					if (size > arrLen) {
 						return;
 					}
-					if (size == arrLen) {
+					if (size === arrLen) {
 						allResult.push([].concat(result, arr));
 					} else {
 						for (var i = 0; i < arrLen; i++) {
 							var newResult = [].concat(result);
 							newResult.push(arr[i]);
-							if (size == 1) {
+							if (size === 1) {
 								allResult.push(newResult);
 							} else {
 								var newArr = [].concat(arr);
 								newArr.splice(0, i + 1);
-								f(newArr, size - 1, newArr);
+								f(newArr, size - 1, newResult);
 							}
 						}
 					}

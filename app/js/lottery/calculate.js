@@ -72,18 +72,18 @@ class Calculate{
 			if (size>arrLen) {
 				return;
 			}
-			if (size==arrLen) {
+			if (size===arrLen) {
 				allResult.push([].concat(result,arr))
 			}else {
 				for(let i=0;i<arrLen;i++){
 					let newResult=[].concat(result);
 					newResult.push(arr[i]);
-					if (size==1) {
+					if (size===1) {
 						allResult.push(newResult)
 					}else {
 						let newArr=[].concat(arr);
 						newArr.splice(0,i+1);
-						f(newArr,size-1,newArr);
+						f(newArr,size-1,newResult);
 					}
 				}
 			}

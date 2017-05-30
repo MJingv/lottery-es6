@@ -147,10 +147,10 @@ class Base{
 		//添加号码
 		addCode(){
 			let self=this;
-			let $active=$('.boll-list .btn-boll-active ').text().match(/\d{2}/g);
+			let $active=$('.boll-list .btn-boll-active ').text().match(/\d{2}/g);//2个数字一组
 			let active=$active?$active.length:0;
 			let count=self.computeCount(active,self.cur_play);
-			if (count) {
+			if (count) {//添加条目
 				self.addCodeItem($active.join(' '),self.cur_play,self.play_list.get(self.cur_play).name,count);
 
 			}
@@ -162,7 +162,7 @@ class Base{
 			const tpl=`
 			<li codes="${type}|${code}" bonus="${count*2}" count="${count}">
 			 <div class='code'>
-			  <b>${type}${count>1?'复式':'单式'}</b>
+			  <b>${typeName}${count>1?'复式':'单式'}</b>
 			  <b class='em'>${code}</b>
 			  [${count}注,<em class="code-list-money">${count*2}</em>元]
 			 </div>
@@ -198,14 +198,11 @@ class Base{
 				</em>`
 
 			}else {
-				tpl=`您选了<b>${count}</b>注，
-				共<b >${count*2}</b>元 <em>若中奖，
-				奖金：<strong class="red"> ${range[0]} </strong>元
-				至<strong class="red"> ${range[1]} </strong>
-				 您将
-				${(win1<0)&&(win2<0)?'亏损':'盈利'}
-				<strong class="${win1>=0?'red':'green'}">${Math.abs(c1)}</strong>至
-				<strong class="${win1>=0?'red':'green'}">${Math.abs(c2)}</strong>元
+				tpl=`您选了<b>${count}</b>注，共<b>${count*2}</b>元 <em>若中奖，奖金：
+				<strong class="red"> ${range[0]} </strong> 至 <strong class="red"> ${range[1]} </strong> 元,
+				 您将 ${(win1<0&&win2<0)?'亏损':'盈利'}
+				<strong class="${win1>=0?'red':'green'}">${c1}</strong>至
+				<strong class="${win2>=0?'red':'green'}">${c1}</strong>元
 				</em>`
 				
 			}
