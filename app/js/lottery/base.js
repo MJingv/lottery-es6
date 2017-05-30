@@ -3,8 +3,7 @@ import $ from 'jquery';
 class Base{
 		// 初始化奖金及说明
 		initPlayList(){
-		//
-		this.play_list.
+		this.play_list. //map数据结构
 		set('r2',{
 			bonus:6,
 			tip:'从01～11中任选2个或多个号码，所选号码与开奖号码相同，即中奖<em class="red">6</em>元',
@@ -43,17 +42,20 @@ class Base{
 		
 		}
 
-		//初始化号码
+		//初始化选号码
 		initNumber(){
+			//number是Set数据结构,!不可重复!
 			for(let i=1;i<12;i++){
+				//位数为2，不够在前面添加0
 				this.number.add((''+i).padStart(2,'0'));
 			}
 		}
 		//设置遗漏数据
 		setOmit(omit){
-			let self=this;
+			//omit是Map数据结构
+			let self=this;//保存当前对象的引用
 			self.omit.clear();//清除以前遗漏数据
-			for(let [index,item] of omit.entries()){
+			for(let [index,item] of omit.entries()){//遍历结果
 				self.omit.set(index,item);
 			}
 			$(self.omit_el).each(function(index,item){
@@ -62,19 +64,21 @@ class Base{
 		}
 		//设置开奖
 		setOpenCode(code){
-			let self=this;
+			//open_code是Set数据结构,！开奖号码不可重复！
+			let self=this;//保存当前对象的引用
 			self.open_code.clear();//清除以前获奖选号
 			for(let item of code.values()){
 				self.open_code.add(item);
 			}
+			//更新获奖号码接口
 			self.updateOpenCode&&self.updateOpenCode.call(self,code);
 		}
 		//号码选中和取消
 		toggleCodeActive(e){
-			let self=this;
-			let $cur=$(e.currentTarget);
+			let self=this;//保存当前对象的引用
+			let $cur=$(e.currentTarget);//获取子元素
 			$cur.toggleClass('btn-boll-active');
-			self.getCount();
+			self.getCount();//更新金额
 		}
 
 		//切换玩法

@@ -8925,8 +8925,8 @@
 
 			// 初始化奖金及说明
 			value: function initPlayList() {
-				//
-				this.play_list.set('r2', {
+				this.play_list. //map数据结构
+				set('r2', {
 					bonus: 6,
 					tip: '从01～11中任选2个或多个号码，所选号码与开奖号码相同，即中奖<em class="red">6</em>元',
 					name: '任二'
@@ -8957,12 +8957,14 @@
 				});
 			}
 
-			//初始化号码
+			//初始化选号码
 
 		}, {
 			key: 'initNumber',
 			value: function initNumber() {
+				//number是Set数据结构,!不可重复!
 				for (var i = 1; i < 12; i++) {
+					//位数为2，不够在前面添加0
 					this.number.add(('' + i).padStart(2, '0'));
 				}
 			}
@@ -8971,7 +8973,8 @@
 		}, {
 			key: 'setOmit',
 			value: function setOmit(omit) {
-				var self = this;
+				//omit是Map数据结构
+				var self = this; //保存当前对象的引用
 				self.omit.clear(); //清除以前遗漏数据
 				var _iteratorNormalCompletion = true;
 				var _didIteratorError = false;
@@ -8983,6 +8986,7 @@
 						    index = _step$value[0],
 						    item = _step$value[1];
 
+						//遍历结果
 						self.omit.set(index, item);
 					}
 				} catch (err) {
@@ -9009,7 +9013,8 @@
 		}, {
 			key: 'setOpenCode',
 			value: function setOpenCode(code) {
-				var self = this;
+				//open_code是Set数据结构,！开奖号码不可重复！
+				var self = this; //保存当前对象的引用
 				self.open_code.clear(); //清除以前获奖选号
 				var _iteratorNormalCompletion2 = true;
 				var _didIteratorError2 = false;
@@ -9021,6 +9026,7 @@
 
 						self.open_code.add(item);
 					}
+					//更新获奖号码接口
 				} catch (err) {
 					_didIteratorError2 = true;
 					_iteratorError2 = err;
@@ -9043,10 +9049,10 @@
 		}, {
 			key: 'toggleCodeActive',
 			value: function toggleCodeActive(e) {
-				var self = this;
-				var $cur = (0, _jquery2.default)(e.currentTarget);
+				var self = this; //保存当前对象的引用
+				var $cur = (0, _jquery2.default)(e.currentTarget); //获取子元素
 				$cur.toggleClass('btn-boll-active');
-				self.getCount();
+				self.getCount(); //更新金额
 			}
 
 			//切换玩法
