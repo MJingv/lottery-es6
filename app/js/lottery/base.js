@@ -81,7 +81,7 @@ class Base{
 			let self=this;
 			let $cur=$(e.currentTarget);
 			$cur.addClass('active').siblings().removeClass('active');
-			self.cur_play=$cur.attr('desc').toLocalLowCase();
+			self.cur_play=$cur.attr('desc').toLowerCase();
 			$('#zx_sm span').html(self.play_list.get(self.cur_play).tip);
 			$('.boll-list .btn-boll').removeClass('btn-boll-active');
 			self.getCount();
@@ -151,7 +151,7 @@ class Base{
 			let active=$active?$active.length:0;
 			let count=self.computeCount(active,self.cur_play);
 			if (count) {
-				self.addCodeItem($active.join(''),self.cur_play,self.play_list.get(self.cur_play).name,count);
+				self.addCodeItem($active.join(' '),self.cur_play,self.play_list.get(self.cur_play).name,count);
 
 			}
 		}
@@ -183,7 +183,7 @@ class Base{
 			let win2=range[1]-money;
 			let tpl;
 			let c1=(win1<0&&win2<0)?Math.abs(win1):win1;
-			let c2=(win2<0&&win2<0)?Math.abs(win1):win2;
+			let c2=(win2<0&&win2<0)?Math.abs(win2):win2;
 			if(count===0){
 				tpl-`您选了<b class="red">${count}</b>注，
 				共<b class="red">${count*2}</b>元`
@@ -217,7 +217,7 @@ class Base{
 		getTotal(){
 			let count=0;
 			$('.code-list li').each(function  (index,item) {
-				count+=$(item).attr(count)*1;
+				count+=$(item).attr('count')*1;
 			})
 			$('#count').text(count);
 			$('#money').text(count*2);

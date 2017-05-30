@@ -2,7 +2,7 @@ class Timer{
 	countdown(end,update,handle){
 		const now=new Date().getTime();
 		const self=this;
-		if(now-end){
+		if(now-end>0){
 			//如果倒计时结束
 			handle.call(self);
 

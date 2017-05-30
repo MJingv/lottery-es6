@@ -8834,7 +8834,7 @@
 	    _this.state = state;
 	    _this.el = '';
 	    _this.omit = new Map();
-	    _this.open_code = new Map();
+	    _this.open_code = new Set();
 	    _this.open_code_list = new Set();
 	    _this.play_list = new Map();
 	    _this.number = new Set();
@@ -9056,7 +9056,7 @@
 				var self = this;
 				var $cur = (0, _jquery2.default)(e.currentTarget);
 				$cur.addClass('active').siblings().removeClass('active');
-				self.cur_play = $cur.attr('desc').toLocalLowCase();
+				self.cur_play = $cur.attr('desc').toLowerCase();
 				(0, _jquery2.default)('#zx_sm span').html(self.play_list.get(self.cur_play).tip);
 				(0, _jquery2.default)('.boll-list .btn-boll').removeClass('btn-boll-active');
 				self.getCount();
@@ -9128,7 +9128,7 @@
 				var active = $active ? $active.length : 0;
 				var count = self.computeCount(active, self.cur_play);
 				if (count) {
-					self.addCodeItem($active.join(''), self.cur_play, self.play_list.get(self.cur_play).name, count);
+					self.addCodeItem($active.join(' '), self.cur_play, self.play_list.get(self.cur_play).name, count);
 				}
 			}
 
@@ -9154,7 +9154,7 @@
 				var win2 = range[1] - money;
 				var tpl = void 0;
 				var c1 = win1 < 0 && win2 < 0 ? Math.abs(win1) : win1;
-				var c2 = win2 < 0 && win2 < 0 ? Math.abs(win1) : win2;
+				var c2 = win2 < 0 && win2 < 0 ? Math.abs(win2) : win2;
 				if (count === 0) {
 					tpl - ('\u60A8\u9009\u4E86<b class="red">' + count + '</b>\u6CE8\uFF0C\n\t\t\t\t\u5171<b class="red">' + count * 2 + '</b>\u5143');
 				} else if (range[0] === range[1]) {
@@ -9172,7 +9172,7 @@
 			value: function getTotal() {
 				var count = 0;
 				(0, _jquery2.default)('.code-list li').each(function (index, item) {
-					count += (0, _jquery2.default)(item).attr(count) * 1;
+					count += (0, _jquery2.default)(item).attr('count') * 1;
 				});
 				(0, _jquery2.default)('#count').text(count);
 				(0, _jquery2.default)('#money').text(count * 2);
@@ -19082,7 +19082,7 @@
 				var exist = this.play_list.has(play_name);
 				var arr = new Array(active).fill('0');
 				if (exist && play_name.at(0) === 'r') {
-					count = Calculate.combine(arr, play_name.split('')[1]);
+					count = Calculate.combine(arr, play_name.split('')[1]).length;
 				}
 				return count;
 			}
@@ -19096,7 +19096,7 @@
 			value: function computeBonus(active, play_name) {
 				var play = play_name.split('');
 				var self = this;
-				var arr = new Array(play[1] * 1).fil(0);
+				var arr = new Array(play[1] * 1).fill(0);
 				var min = void 0,
 				    max = void 0;
 				if (play[0] === 'r') {
@@ -19150,7 +19150,7 @@
 						return;
 					}
 					if (size == arrLen) {
-						allResult.push([], concat(result, arr));
+						allResult.push([].concat(result, arr));
 					} else {
 						for (var i = 0; i < arrLen; i++) {
 							var newResult = [].concat(result);
@@ -19165,6 +19165,7 @@
 						}
 					}
 				})(arr, size, []);
+				return allResult;
 			}
 		}]);
 
@@ -19299,7 +19300,7 @@
 			value: function countdown(end, update, handle) {
 				var now = new Date().getTime();
 				var self = this;
-				if (now - end) {
+				if (now - end > 0) {
 					//如果倒计时结束
 					handle.call(self);
 				} else {

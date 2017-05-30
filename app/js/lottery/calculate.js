@@ -8,7 +8,7 @@ class Calculate{
 		const exist=this.play_list.has(play_name);
 		const arr=new Array(active).fill('0');
 		if (exist && play_name.at(0)==='r') {
-			count=Calculate.combine(arr,play_name.split('')[1]);
+			count=Calculate.combine(arr,play_name.split('')[1]).length;
 
 		}
 		return count;
@@ -20,7 +20,7 @@ class Calculate{
 	computeBonus(active,play_name){
 		const play=play_name.split('');
 		const self=this;
-		let arr=new Array(play[1]*1).fil(0);
+		let arr=new Array(play[1]*1).fill(0);
 		let min,max;
 		if (play[0]==='r') {
 			let min_active=5-(11-active);//最小命中数
@@ -73,7 +73,7 @@ class Calculate{
 				return;
 			}
 			if (size==arrLen) {
-				allResult.push([],concat(result,arr))
+				allResult.push([].concat(result,arr))
 			}else {
 				for(let i=0;i<arrLen;i++){
 					let newResult=[].concat(result);
@@ -88,6 +88,7 @@ class Calculate{
 				}
 			}
 		})(arr,size,[])
+		return allResult
 
 	}
 }
