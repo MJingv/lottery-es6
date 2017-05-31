@@ -3,7 +3,7 @@ import $ from 'jquery';
 class Base{
 		// 初始化奖金及说明
 		initPlayList(){
-		this.play_list. //map数据结构
+			this.play_list. //map数据结构
 		set('r2',{
 			bonus:6,
 			tip:'从01～11中任选2个或多个号码，所选号码与开奖号码相同，即中奖<em class="red">6</em>元',
@@ -90,7 +90,6 @@ class Base{
 			$('#zx_sm span').html(self.play_list.get(self.cur_play).tip);
 			$('.boll-list .btn-boll').removeClass('btn-boll-active');
 			$('#play_tips_num').html(self.play_list.get(self.cur_play).tip.charAt(9));
-			
 			self.getCount();
 
 		}
@@ -220,7 +219,8 @@ class Base{
 		//计算所有金额
 		getTotal(){
 			let count=0;
-			$('.code-list li').each(function  (index,item) {
+			//遍历购物车的注数
+			$('.codelist li').each(function  (index,item) {
 				count+=$(item).attr('count')*1;
 			})
 			$('#count').text(count);
@@ -230,24 +230,30 @@ class Base{
 		//生成随机数
 		getRandom(num){
 			let arr=[],index;
+			//number是Set，转换成数组
 			let number=Array.from(this.number);
 			while(num--){
 				index=Number.parseInt(Math.random()*number.length);
 				arr.push(number[index]);
+				//删除已生成的数字，避免重复
 				number.splice(index,1);
-
 			}
 			return arr.join(' ');
 		}
 
-			//添加随机号码
-			getRandomCode(e){
+		//添加随机号码
+		getRandomCode(e){
 				e.preventDefault();
 				let num=e.currentTarget.getAttribute('count');
 				let play=this.cur_play.match(/\d+/g)[0];
 				let self=this;
-				if(num==='0'){
+				if(num==='0'){ 
+					//清空购物车
 					$(self.cart_el).html('');
+					//总价清零
+					$('#count').text(0);
+					$('#money').text(0);
+
 
 				}else {
 					for(let i=0;i<num;i++){

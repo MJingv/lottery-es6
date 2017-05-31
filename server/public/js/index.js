@@ -9067,7 +9067,6 @@
 				(0, _jquery2.default)('#zx_sm span').html(self.play_list.get(self.cur_play).tip);
 				(0, _jquery2.default)('.boll-list .btn-boll').removeClass('btn-boll-active');
 				(0, _jquery2.default)('#play_tips_num').html(self.play_list.get(self.cur_play).tip.charAt(9));
-
 				self.getCount();
 			}
 			//操作区功能
@@ -9181,7 +9180,8 @@
 			key: 'getTotal',
 			value: function getTotal() {
 				var count = 0;
-				(0, _jquery2.default)('.code-list li').each(function (index, item) {
+				//遍历购物车的注数
+				(0, _jquery2.default)('.codelist li').each(function (index, item) {
 					count += (0, _jquery2.default)(item).attr('count') * 1;
 				});
 				(0, _jquery2.default)('#count').text(count);
@@ -9195,10 +9195,12 @@
 			value: function getRandom(num) {
 				var arr = [],
 				    index = void 0;
+				//number是Set，转换成数组
 				var number = Array.from(this.number);
 				while (num--) {
 					index = Number.parseInt(Math.random() * number.length);
 					arr.push(number[index]);
+					//删除已生成的数字，避免重复
 					number.splice(index, 1);
 				}
 				return arr.join(' ');
@@ -9214,7 +9216,11 @@
 				var play = this.cur_play.match(/\d+/g)[0];
 				var self = this;
 				if (num === '0') {
+					//清空购物车
 					(0, _jquery2.default)(self.cart_el).html('');
+					//总价清零
+					(0, _jquery2.default)('#count').text(0);
+					(0, _jquery2.default)('#money').text(0);
 				} else {
 					for (var i = 0; i < num; i++) {
 						self.addCodeItem(self.getRandom(play), self.cur_play, self.play_list.get(self.cur_play).name, 1);
