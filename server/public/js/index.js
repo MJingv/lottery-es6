@@ -9061,11 +9061,13 @@
 			key: 'changePlayNav',
 			value: function changePlayNav(e) {
 				var self = this;
-				var $cur = (0, _jquery2.default)(e.currentTarget);
+				var $cur = (0, _jquery2.default)(e.currentTarget); //获取子元素
 				$cur.addClass('active').siblings().removeClass('active');
-				self.cur_play = $cur.attr('desc').toLowerCase();
+				self.cur_play = $cur.attr('desc').toLowerCase(); //获取当前玩法
 				(0, _jquery2.default)('#zx_sm span').html(self.play_list.get(self.cur_play).tip);
 				(0, _jquery2.default)('.boll-list .btn-boll').removeClass('btn-boll-active');
+				(0, _jquery2.default)('#play_tips_num').html(self.play_list.get(self.cur_play).tip.charAt(9));
+
 				self.getCount();
 			}
 			//操作区功能
@@ -19090,7 +19092,7 @@
 				//判断是否为合法玩法(r2~r8)
 				var exist = this.play_list.has(play_name);
 				//生成长度为active选中的个数，填充值为0的数组
-				var arr = new Array(active).fill('0');
+				var arr = new Array(active).fill(0);
 				if (exist && play_name.at(0) === 'r') {
 					//选择正确
 					count = Calculate.combine(arr, play_name.split('')[1]).length;
@@ -19099,8 +19101,9 @@
 			}
 			//奖金范围预测
 			//active 当前选中的号码
-			//play_name 当前玩法标识
+			//play_name 当前玩法标识（eg:r3...）
 			//return 奖金范围
+			//开奖号码是5个
 
 		}, {
 			key: 'computeBonus',
@@ -19111,12 +19114,14 @@
 				var min = void 0,
 				    max = void 0;
 				if (play[0] === 'r') {
+					//如果是任选玩法
 					var min_active = 5 - (11 - active); //最小命中数
 					if (min_active > 0) {
 						if (min_active - play[1] >= 0) {
 							arr = new Array(min_active).fill(0);
-							min = Calculate.combine(arr, play[1].length);
+							min = Calculate.combine(arr, play[1]).length;
 						} else {
+							// 玩法是r5以上
 							if (play[1] - 5 > 0 && active - play[1] >= 0) {
 								arr = new Array(active - 5).fill(0);
 								min = Calculate.combine(arr, play[1] - 5).length;
@@ -19130,6 +19135,7 @@
 
 					var max_active = Math.min(active, 5);
 					if (play[1] - 5 > 0) {
+
 						if (active - play[1] >= 0) {
 							arr = new Array(active - 5).fill(0);
 							max = Calculate.combine(arr, play[1] - 5).length;
@@ -19138,7 +19144,7 @@
 						}
 					} else if (play[1] - 5 < 0) {
 						arr = new Array(Math.min(active, 5)).fill(0);
-						max = Calculate.combine(arr, play[1].length);
+						max = Calculate.combine(arr, play[1]).length;
 					} else {
 						max = 1;
 					}

@@ -84,11 +84,13 @@ class Base{
 		//切换玩法
 		changePlayNav(e){
 			let self=this;
-			let $cur=$(e.currentTarget);
+			let $cur=$(e.currentTarget);//获取子元素
 			$cur.addClass('active').siblings().removeClass('active');
-			self.cur_play=$cur.attr('desc').toLowerCase();
+			self.cur_play=$cur.attr('desc').toLowerCase();//获取当前玩法
 			$('#zx_sm span').html(self.play_list.get(self.cur_play).tip);
 			$('.boll-list .btn-boll').removeClass('btn-boll-active');
+			$('#play_tips_num').html(self.play_list.get(self.cur_play).tip.charAt(9));
+			
 			self.getCount();
 
 		}
