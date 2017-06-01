@@ -8747,7 +8747,9 @@
 
 	function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
 
+	//实现多重继承
 	var copyProperties = function copyProperties(target, source) {
+	  //深度拷贝(目标，原对象)
 	  var _iteratorNormalCompletion = true;
 	  var _didIteratorError = false;
 	  var _iteratorError = undefined;
@@ -8756,7 +8758,9 @@
 	    for (var _iterator = Reflect.ownKeys(source)[Symbol.iterator](), _step; !(_iteratorNormalCompletion = (_step = _iterator.next()).done); _iteratorNormalCompletion = true) {
 	      var key = _step.value;
 
+	      //ownKeys拿到所有属性
 	      if (key !== 'constructor' && key !== 'prototype' && key !== 'name') {
+	        //选择性拷贝:有构造函数，原型，name
 	        var desc = Object.getOwnPropertyDescriptor(source, key);
 	        Object.defineProperty(target, key, desc);
 	      }
@@ -8794,8 +8798,8 @@
 	    for (var _iterator2 = mixins[Symbol.iterator](), _step2; !(_iteratorNormalCompletion2 = (_step2 = _iterator2.next()).done); _iteratorNormalCompletion2 = true) {
 	      var mixin = _step2.value;
 
-	      copyProperties(Mix, mixin);
-	      copyProperties(Mix.prototype, mixin.prototype);
+	      copyProperties(Mix, mixin); //深度拷贝类
+	      copyProperties(Mix.prototype, mixin.prototype); //拷贝原型
 	    }
 	  } catch (err) {
 	    _didIteratorError2 = true;
@@ -8832,13 +8836,13 @@
 	    _this.cname = cname;
 	    _this.issue = issue;
 	    _this.state = state;
-	    _this.el = '';
+	    _this.el = ''; //选择器
 	    _this.omit = new Map();
 	    _this.open_code = new Set();
 	    _this.open_code_list = new Set();
 	    _this.play_list = new Map();
 	    _this.number = new Set();
-	    _this.issue_el = "#curr_issue";
+	    _this.issue_el = "#curr_issue"; //期号选择器
 	    _this.countdown_el = '#countdown';
 	    _this.state_el = '.state_el';
 	    _this.cart_el = '.codelist';
@@ -8858,18 +8862,25 @@
 	    value: function updateState() {
 	      var self = this;
 	      this.getState().then(function (res) {
-	        self.issue = res.issue;
-	        self.end_time = res.end_time;
-	        self.state = res.state;
-	        (0, _jquery2.default)(self.issue_el).text(res.issue);
+	        //用then实现异步操作
+	        self.issue = res.issue; //当前期号
+	        self.end_time = res.end_time; //当前截止时间
+	        self.state = res.state; //当前状态
+	        (0, _jquery2.default)(self.issue_el).text(res.issue); //在页面中显示更新的期号
+	        (0, _jquery2.default)(self.state_el).text(res.state);
 	        self.countdown(res.end_time, function (time) {
-	          (0, _jquery2.default)(self.countdown_el).html(time);
-	          // body...
+	          (0, _jquery2.default)(self.countdown_el).html(time); //在页面中显示更新的倒计时
 	        }, function () {
 	          setTimeout(function () {
-	            self.updateState();
-	            self.getOmit(self.issue).then(function (res) {});
-	            self.getOpenCode(self.issue).then(function (res) {});
+	            self.updateState(); //获取最新状态
+
+	            self.getOmit(self.issue).then(function (res) {
+	              //获取最新遗漏
+
+	            });
+	            self.getOpenCode(self.issue).then(function (res) {
+	              //获取最新开奖号
+	            });
 	          }, 500);
 	        });
 	      });
@@ -8880,10 +8891,15 @@
 	    key: 'initEvent',
 	    value: function initEvent() {
 	      var self = this;
-	      (0, _jquery2.default)('#plays').on('click', 'li', self.changePlayNav.bind(self));
+	      //玩法切换
+	      (0, _jquery2.default)('#plays').on('click', 'li', self.changePlayNav.bind(self)); //用bind 改变this指向
+	      //号码选中
 	      (0, _jquery2.default)('.boll-list').on('click', '.btn-boll', self.toggleCodeActive.bind(self));
+	      //添加号码
 	      (0, _jquery2.default)('#confirm_sel_code').on('click', self.addCode.bind(self));
+	      //操作区大小奇偶
 	      (0, _jquery2.default)('.dxjo').on('click', 'li', self.assistHandle.bind(self));
+	      //随机号码(机选)
 	      (0, _jquery2.default)('.qkmethod').on('click', '.btn-middle', self.getRandomCode.bind(self));
 	    }
 	  }]);
