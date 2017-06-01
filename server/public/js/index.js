@@ -9185,7 +9185,7 @@
 				} else if (range[0] === range[1]) {
 					tpl = '\u60A8\u9009\u4E86<b>' + count + '</b>\u6CE8\uFF0C\n\t\t\t\t\u5171<b >' + count * 2 + '</b>\u5143 <em>\u82E5\u4E2D\u5956\uFF0C\n\t\t\t\t\u5956\u91D1\uFF1A<strong class="red"> ' + range[0] + ' </strong>\u5143\uFF0C\u60A8\u5C06\n\t\t\t\t' + (win1 >= 0 ? '盈利' : '亏损') + '\n\t\t\t\t<strong class="' + (win1 >= 0 ? 'red' : 'green') + '">' + Math.abs(win1) + '</strong>\u5143\n\n\t\t\t\t</em>';
 				} else {
-					tpl = '\u60A8\u9009\u4E86<b>' + count + '</b>\u6CE8\uFF0C\u5171<b>' + count * 2 + '</b>\u5143 <em>\u82E5\u4E2D\u5956\uFF0C\u5956\u91D1\uFF1A\n\t\t\t\t<strong class="red"> ' + range[0] + ' </strong> \u81F3 <strong class="red"> ' + range[1] + ' </strong> \u5143,\n\t\t\t\t \u60A8\u5C06 ' + (win1 < 0 && win2 < 0 ? '亏损' : '盈利') + '\n\t\t\t\t<strong class="' + (win1 >= 0 ? 'red' : 'green') + '">' + c1 + '</strong>\u81F3\n\t\t\t\t<strong class="' + (win2 >= 0 ? 'red' : 'green') + '">' + c1 + '</strong>\u5143\n\t\t\t\t</em>';
+					tpl = '\u60A8\u9009\u4E86<b>' + count + '</b>\u6CE8\uFF0C\u5171<b>' + count * 2 + '</b>\u5143 <em>\u82E5\u4E2D\u5956\uFF0C\u5956\u91D1\uFF1A\n\t\t\t\t<strong class="red"> ' + range[0] + ' </strong> \u81F3 <strong class="red"> ' + range[1] + ' </strong> \u5143,\n\t\t\t\t \u60A8\u5C06 ' + (win1 < 0 && win2 < 0 ? '亏损' : '盈利') + '\n\t\t\t\t<strong class="' + (win1 >= 0 ? 'red' : 'green') + '">' + c1 + '</strong>\u81F3\n\t\t\t\t<strong class="' + (win2 >= 0 ? 'red' : 'green') + '">' + c2 + '</strong>\u5143\n\t\t\t\t</em>';
 				}
 				(0, _jquery2.default)('.sel_info').html(tpl);
 			}

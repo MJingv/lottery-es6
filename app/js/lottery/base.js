@@ -208,7 +208,7 @@ class Base{
 				<strong class="red"> ${range[0]} </strong> 至 <strong class="red"> ${range[1]} </strong> 元,
 				 您将 ${(win1<0&&win2<0)?'亏损':'盈利'}
 				<strong class="${win1>=0?'red':'green'}">${c1}</strong>至
-				<strong class="${win2>=0?'red':'green'}">${c1}</strong>元
+				<strong class="${win2>=0?'red':'green'}">${c2}</strong>元
 				</em>`
 				
 			}
