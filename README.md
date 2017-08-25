@@ -1,5 +1,14 @@
-#this is a website about lottery 
+# LotterySales
 
-1.download this project 
-2.cd pwd
-3.gulp --watch
+> A es6 project about selling lottery 
+
+## Build Setup
+
+``` bash
+# install dependencies
+npm install 
+
+# serve with hot reload at localhost:3000 
+gulp --watch
+
+
